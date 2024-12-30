@@ -54,7 +54,7 @@ async function getPoem() {
 // 获取文章的函数
 async function getArticles(): Promise<ArticlesResponse> {
     try {
-        const res = await axios.get('/articles?populate=tags');
+        const res = await axios.get('/articles?populate=tags&sort[publishedAt]=desc');
         return res.data;
     } catch (error) {
         console.error('获取文章失败:', error);

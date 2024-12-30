@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import MyPagination from "@/components/MyPagination";
 import PostCard from "./PostCard";
 import { useRouter } from "next/navigation";
-import { formatDate } from "@/utils/function";
+import dayjs from "dayjs";
 
 import s from "./index.module.scss";
 
@@ -50,7 +50,7 @@ const Section: React.FC<SectionProps> = ({ articles, pagination }) => {
           key={article.id}
           title={article.title}
           content={article.description}
-          date={formatDate(article.publishedAt)}
+          date={dayjs(article.publishedAt).format('YYYY-MM-DD HH:mm:ss')}
           tags={article.tags}
           onClick={() => router.push(`/artDetail?artId=${article.id}`)}
         />

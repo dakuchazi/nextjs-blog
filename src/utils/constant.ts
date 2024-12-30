@@ -58,8 +58,4 @@ export const myAvatar70 =
 export const defaultCommentAvatar =
   "https://s3.bmp.ovh/imgs/2024/07/05/4c96a570c675b68b.webp";
 
-//生产环境baseUrl
-export const PRO_URL = "http://8.138.87.86:7001";
 
-//开发环境baseUrl
-export const DEV_URL = "http://127.0.0.1:1337/api";
