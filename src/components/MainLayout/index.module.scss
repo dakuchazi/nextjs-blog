@@ -1,0 +1,50 @@
+@import '../../styles/base.scss';
+
+
+@font-face {
+    font-family: 'FiraCode';
+    font-display: auto;
+    src: url(../../fonts/FiraCode-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+
+.main {
+    min-height: calc(100vh - #{$footerHeight + 2 * $space});
+
+    .center {
+        width: $centerWidth;
+        margin: auto;
+    }
+}
+
+@media screen and (max-width: 1240px) {
+    .main {
+        min-height: calc(100vh - 70rem - 20rem);
+
+        .center {
+            width: 100vw;
+        }
+    }
+}
+
+
+.AppBox {
+    font-family: 'dengxian';
+    background-position: center 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.bg0 {
+    background-image: url(../../imgs/bg0.webp);
+}
+
+.bg1 {
+    background-image: url(../../imgs/bg1.webp);
+}
+
+.bg2 {
+    background-image: url(../../imgs/bg2.webp);
+}
