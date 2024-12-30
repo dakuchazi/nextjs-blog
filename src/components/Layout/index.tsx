@@ -1,3 +1,5 @@
+"use client"
+
 import { useMount, useTitle } from "ahooks";
 import classNames from "classnames";
 import React, { ReactNode } from "react";

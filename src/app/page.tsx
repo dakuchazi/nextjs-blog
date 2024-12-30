@@ -7,7 +7,7 @@ import axios from "@/utils/axios";
 
 import s from "./(home)/page.module.scss";
 
-interface Article {
+export interface Article {
     id: number;
     documentId: string;
     title: string;
@@ -16,11 +16,11 @@ interface Article {
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
-    tags: any[];
     locale: string | null;
+    tags: any[];
 }
 
-interface ArticlesResponse {
+export interface ArticlesResponse {
     data: Article[];
     meta: {
         pagination: {
@@ -30,6 +30,13 @@ interface ArticlesResponse {
             total: number;
         };
     };
+}
+
+export interface Pagination {
+    page: number;
+    pageSize: number;
+    pageCount: number;
+    total: number;
 }
 
 // 获取诗句的函数
@@ -48,8 +55,6 @@ async function getPoem() {
 async function getArticles(): Promise<ArticlesResponse> {
     try {
         const res = await axios.get('/articles?populate=tags');
-        console.log('===res.data===', res.data);
-
         return res.data;
     } catch (error) {
         console.error('获取文章失败:', error);

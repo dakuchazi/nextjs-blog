@@ -4,8 +4,8 @@ import React, { ReactNode } from "react";
 import s from "./index.module.scss";
 
 export interface PageTitleProps {
-  title: string;
-  desc: string;
+  title?: string;
+  desc?: string;
   children?: React.ReactNode;
   className?: string;
 }
