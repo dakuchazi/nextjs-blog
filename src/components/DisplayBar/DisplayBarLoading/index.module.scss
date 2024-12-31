@@ -1,4 +1,5 @@
-@import '../../../styles/style.scss';
+@use '../../../styles/style.scss';
+@use '../../../styles/base.scss' as base;
 
 .displayBarLoading {
   height: 100%;
@@ -10,7 +11,7 @@
   .bar {
     height: 18px;
     width: 80%;
-    background-color: $themeColor2;
+    background-color: base.$themeColor2;
     border-radius: 6px;
   }
 }

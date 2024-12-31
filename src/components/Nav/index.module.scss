@@ -1,5 +1,5 @@
-@import '../../styles/base.scss';
-@import '../../styles/style.scss';
+@use '../../styles/base.scss' as base;
+@use '../../styles/style.scss';
 
 .baseBtn {
   height: 44px;
@@ -11,29 +11,29 @@
   font-weight: 700;
   margin-right: 20px;
   border-radius: 14px;
-  color: $textColor;
+  color: base.$textColor;
   user-select: none;
   @extend .hover;
 }
 
 .hiddenNav {
   box-shadow: none !important;
-  transform: translate(0, -$navHeight);
+  transform: translate(0, - base.$navHeight);
 }
 
 .nav {
   width: 100%;
-  height: $navHeight;
-  background-color: $themeColor1;
+  height: base.$navHeight;
+  background-color: base.$themeColor1;
   position: fixed;
   top: 0;
   z-index: 10;
-  box-shadow: 0 0 18px $footerBg;
+  box-shadow: 0 0 18px base.$footerBg;
   @extend .trans;
 
   .navContent {
     position: relative;
-    width: $centerWidth;
+    width: base.$centerWidth;
     height: 100%;
     margin: 0 auto;
     display: flex;
@@ -64,12 +64,14 @@
     .navBtn {
       @extend .baseBtn;
     }
+
     .navBtn:last-child {
       margin-right: 0;
     }
+
     .navActive {
       @extend .navBtn;
-      background-color: $hoverColor;
+      background-color: base.$hoverColor;
     }
 
     .articlesBtn {
@@ -80,7 +82,7 @@
         position: absolute;
         top: -160px;
         width: 90px;
-        background-color: $themeColor1;
+        background-color: base.$themeColor1;
         border-radius: 14px;
         padding: 10px;
         z-index: 0;
@@ -96,18 +98,21 @@
           margin-bottom: 10px;
           border-radius: 10px;
           user-select: none;
-          background-color: $themeColor2;
-          color: $textColor;
+          background-color: base.$themeColor2;
+          color: base.$textColor;
         }
+
         .articelsSecondItem:last-child {
           margin-bottom: 0;
         }
+
         .sedActive {
           @extend .articelsSecondItem;
-          background-color: $hoverColor;
+          background-color: base.$hoverColor;
         }
       }
     }
+
     .articlesBtn:hover .articelsSecond {
       top: 60px;
     }
@@ -123,7 +128,7 @@
         top: -180px;
         transform: translate(-50%, 0);
         width: 80px;
-        background-color: $themeColor1;
+        background-color: base.$themeColor1;
         border-radius: 14px;
         padding: 10px;
         z-index: 0;
@@ -131,7 +136,7 @@
 
         .modeItem {
           height: 40px;
-          background-color: $themeColor;
+          background-color: base.$themeColor;
           margin-bottom: 10px;
           border-radius: 10px;
           display: flex;
@@ -141,6 +146,7 @@
           @extend .trans;
           color: #fff;
         }
+
         .modeItem1,
         .modeItem2 {
           color: #000;
@@ -149,12 +155,14 @@
         .modeItem:last-child {
           margin-bottom: 0;
         }
+
         .modeItem:hover {
           transform: scale(1.07);
           box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
         }
       }
     }
+
     .modeBtn:hover .modeOpions {
       top: 60px;
     }
@@ -169,7 +177,7 @@
   justify-content: center;
   align-items: center;
   font-size: 22rem;
-  color: $textColor;
+  color: base.$textColor;
   position: fixed;
   top: 0;
   right: 0;
@@ -183,7 +191,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    color: $textColor;
+    color: base.$textColor;
     font-size: 18rem;
     font-family: 'dengxian';
     width: 60rem;
@@ -191,13 +199,16 @@
     border-radius: 10rem;
     margin-bottom: 16rem;
   }
+
   .mobileNavItem:last-child {
     margin-bottom: 0;
   }
+
   .mobileNavActive {
     @extend .mobileNavItem;
-    background-color: $hoverColor;
+    background-color: base.$hoverColor;
   }
+
   .modeItem {
     @extend .mobileNavItem;
     border: 2rem solid #ccc;
@@ -208,6 +219,7 @@
   .nav {
     display: none;
   }
+
   .mobileNavBtn {
     display: flex;
   }

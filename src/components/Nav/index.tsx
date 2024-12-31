@@ -70,9 +70,9 @@ const Nav: React.FC = () => {
       <nav className={classNames(s.nav, { [s.hiddenNav]: !navShow })}>
         <div className={s.navContent}>
           {/* 主页 */}
-          <div className={s.homeBtn} onClick={() => router.push("/")}>
+          <Link href="/" className={s.homeBtn}>
             <HomeOutlined />
-          </div>
+          </Link>
 
           {/* 后台管理 */}
           <a

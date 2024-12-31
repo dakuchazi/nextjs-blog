@@ -1,14 +1,14 @@
-@import '../../styles/base.scss';
-@import '../../styles/style.scss';
+@use '../../styles/base.scss' as base;
+@use '../../styles/style.scss';
 
 .card {
-  margin-bottom: $space;
-  border-radius: $bigRadius;
+  margin-bottom: base.$space;
+  border-radius: base.$bigRadius;
   overflow: hidden;
   user-select: none;
-  background-color: $themeColor;
-  color: $textColor;
-  padding: $space;
+  background-color: base.$themeColor;
+  color: base.$textColor;
+  padding: base.$space;
   @extend .trans;
 }
 

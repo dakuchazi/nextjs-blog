@@ -1,4 +1,4 @@
-@import './base.scss';
+@use './base.scss' as base;
 
 .trans {
   transition: all 0.3s !important;
@@ -7,13 +7,14 @@
 .hover {
   @extend .trans;
 }
+
 .hover:hover {
-  background-color: $hoverColor !important;
+  background-color: base.$hoverColor !important;
 }
 
 .btnBase {
   position: absolute;
-  width: $btnWidth;
+  width: base.$btnWidth;
   height: 36px;
   display: flex;
   justify-content: center;
@@ -23,7 +24,7 @@
   border-radius: 14px;
   font-size: 18px;
   cursor: pointer;
-  background-color: $themeColor1;
+  background-color: base.$themeColor1;
   @extend .hover;
 }
 
@@ -36,7 +37,7 @@
   line-height: 30px;
   font-size: 18px;
   user-select: none;
-  color: $textColor;
+  color: base.$textColor;
   border-radius: 10px;
   cursor: pointer;
   @extend .hover;

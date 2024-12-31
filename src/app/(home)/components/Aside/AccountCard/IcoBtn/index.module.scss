@@ -1,26 +1,26 @@
-@import '../../../../../../styles/base.scss';
-@import '../../../../../../styles/style.scss';
+@use '../../../../../../styles/base.scss' as base;
+@use '../../../../../../styles/style.scss';
 
 .socialBtn {
-  color: $textColor;
+  color: base.$textColor;
   width: 44px;
   height: 44px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: $midRadius;
+  border-radius: base.$midRadius;
   @extend .hover;
 }
 
 .socialBtn:hover {
-  color: $textColor;
+  color: base.$textColor;
 }
 
 .card {
-  border-radius: $bigRadius;
+  border-radius: base.$bigRadius;
   overflow: hidden;
   padding: 0;
-  box-shadow: 0 0 14px $footerBg;
+  box-shadow: 0 0 14px base.$footerBg;
 
   span {
     display: none;

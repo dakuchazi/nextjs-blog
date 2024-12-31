@@ -1,18 +1,19 @@
 import React from "react";
-
 import Card from "@/components/Card";
+import { Tag } from "@/app/page";
 
 import s from "./index.module.scss";
 
-const TagCard: React.FC = () => {
-  const tagData = [{
-    name: "test",
-    _id: "123"
-  }]
+interface Props {
+  data: Tag[]
+}
+
+const TagCard: React.FC<Props> = ({ data }) => {
+
   return (
     <Card className={s.card}>
-      {tagData.map((item) => (
-        <span className={s.tag} key={item._id}>
+      {data.map((item) => (
+        <span className={s.tag} key={item.id}>
           {item.name}
         </span>
       ))}

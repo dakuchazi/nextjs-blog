@@ -6,13 +6,15 @@ import Card from "@/components/Card";
 
 import s from "./index.module.scss";
 
-const NoticeCard: React.FC = () => {
+interface Props {
+  data: string
+}
 
-
+const NoticeCard: React.FC<Props> = ({ data }) => {
 
   return (
     <Card >
-      <div className={s.notice}>{123}</div>
+      <div className={s.notice}>{data}</div>
     </Card>
   );
 };

@@ -1,14 +1,14 @@
-@import '../../styles/base.scss';
+@use '../../styles/base.scss' as base;
 
 #hljs {
   padding: 10px 20px;
-  color: $codeOther;
-  background-color: $codeBg;
+  color: base.$codeOther;
+  background-color: base.$codeBg;
   border-radius: 20px;
 
   // 代码片段
   code {
-    background-color: $codeBg;
+    background-color: base.$codeBg;
     padding: 0;
     font-size: 16px;
     font-family: 'FiraCode', 'dengxian';
@@ -121,13 +121,15 @@
 #hljs::-webkit-scrollbar {
   height: 12px;
 }
+
 /* 滚动槽 */
 #hljs::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0);
 }
+
 /* 滚动条滑块 */
 #hljs::-webkit-scrollbar-thumb {
-  background-color: $themeColor2;
+  background-color: base.$themeColor2;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
@@ -146,6 +148,7 @@
   #hljs::-webkit-scrollbar {
     height: 8rem;
   }
+
   #hljs::-webkit-scrollbar-thumb {
     border-bottom-left-radius: 8rem;
     border-bottom-right-radius: 8rem;

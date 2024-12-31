@@ -12,7 +12,6 @@ export interface Article {
     documentId: string;
     title: string;
     description: string;
-    slug: string;
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
@@ -32,11 +31,61 @@ export interface ArticlesResponse {
     };
 }
 
-export interface Pagination {
+export interface NoticeResponse {
+    data: {
+        id: number,
+        documentId: string;
+        createdAt: string;
+        updatedAt: string;
+        publishedAt: string;
+        locale: string | null;
+        content: string;
+    }
+    meta: {};
+}
+interface Pagination {
     page: number;
     pageSize: number;
     pageCount: number;
     total: number;
+}
+
+export interface Tag {
+    id: number;
+    documentId: string;
+    name: string;
+    articles?: {
+        count: number;
+    };
+}
+
+export interface TagsResponse {
+    data: Tag[];
+    meta: {
+        pagination: {
+            total: number;
+        };
+    };
+}
+
+export interface Category {
+    id: number;
+    documentId: string;
+    name: string;
+    description: string | null;
+    publishedAt: string;
+    articles: {
+        count: number;
+    }
+}
+
+export interface CategoriesResponse {
+    data: Category[];
+    meta: {
+        pagination: {
+            total: number;
+        };
+    };
 }
 
 // 获取诗句的函数
@@ -48,6 +97,17 @@ async function getPoem() {
     } catch (error) {
         console.error('获取诗句失败:', error);
         return '';
+    }
+}
+
+// 获取公告
+async function getNotice() {
+    try {
+        const res = await axios.get('/notice');
+        return res.data as NoticeResponse;
+    } catch (error) {
+        console.error('获取公告失败:', error);
+        return null;
     }
 }
 
@@ -72,12 +132,37 @@ async function getArticles(): Promise<ArticlesResponse> {
     }
 }
 
+// 获取标签
+async function getTags() {
+    try {
+        const res = await axios.get('tags?pagination[pageSize]=9999&sort[publishedAt]=desc');
+        return res.data as TagsResponse;
+    } catch (error) {
+        console.error('获取标签失败:', error);
+        return { data: [], meta: { pagination: { total: 0 } } };
+    }
+}
+
+// 获取分类
+async function getCategories() {
+    try {
+        const res = await axios.get('categories?fields[0]=id');
+        return res.data as CategoriesResponse;
+    } catch (error) {
+        console.error('获取分类失败:', error);
+        return { data: [], meta: { pagination: { total: 0 } } };
+    }
+}
+
 // 服务端组件
 export default async function Home() {
     // 并行获取数据
-    const [articlesResponse, poem] = await Promise.all([
+    const [articlesResponse, poem, noticeResponse, tagsResponse, categoriesResponse] = await Promise.all([
         getArticles(),
-        getPoem()
+        getPoem(),
+        getNotice(),
+        getTags(),
+        getCategories()
     ]);
 
     return (
@@ -93,7 +178,7 @@ export default async function Home() {
                     articles={articlesResponse.data}
                     pagination={articlesResponse.meta.pagination}
                 />
-                <Aside />
+                <Aside articlesData={articlesResponse} noticeData={noticeResponse} tagsData={tagsResponse} categoriesData={categoriesResponse} />
             </div>
         </ClientHome>
     );

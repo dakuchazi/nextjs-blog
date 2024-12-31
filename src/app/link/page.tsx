@@ -3,7 +3,7 @@ import { Title } from "@/utils/titleConfig";
 import { shuffleArray } from "@/utils/function";
 import axios from "@/utils/axios";
 import { Metadata } from 'next';
-import Item from "./components/Item";
+import LinkItem from "./components/LinkItem";
 import { getFullImageUrl } from "@/utils/url";
 
 import s from "./page.module.scss";
@@ -78,7 +78,7 @@ export default async function LinksPage() {
     <Layout title={Title.Link} className={s.box}>
       {shuffledLinks.length > 0 ? (
         shuffledLinks.map((link) => (
-          <Item
+          <LinkItem
             key={link.id}
             link={link.url}
             avatar={getFullImageUrl(link.avatar.formats.small.url)}

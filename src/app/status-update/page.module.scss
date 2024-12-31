@@ -1,9 +1,9 @@
-@import '../../styles/base.scss';
-@import '../../styles/style.scss';
+@use '../../styles/base.scss' as base;
+@use '../../styles/style.scss';
 
 .sayItem {
   display: flex;
-  margin-bottom: $space;
+  margin-bottom: base.$space;
 
   .avatarBox {
     width: 70px;
@@ -26,7 +26,7 @@
       word-break: break-all;
       padding: 20px 20px 44px;
       position: relative;
-      background-color: $themeColor1;
+      background-color: base.$themeColor1;
       user-select: text;
       @extend .trans;
 
@@ -70,7 +70,7 @@
     .date {
       padding: 0 10px;
       border-radius: 10px;
-      color: $textColor;
+      color: base.$textColor;
       height: 30px;
       position: absolute;
       right: 10px;
@@ -80,7 +80,7 @@
       align-items: center;
       font-size: 18px;
       user-select: none;
-      background-color: $themeColor2;
+      background-color: base.$themeColor2;
       @extend .hover;
     }
   }

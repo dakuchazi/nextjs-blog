@@ -1,4 +1,4 @@
-@import './base.scss';
+@use './base.scss' as base;
 
 html,
 body,
@@ -25,7 +25,7 @@ body {
   /* 隐藏x轴导航条 */
   overflow-x: hidden;
   overflow-y: overlay;
-  background-color: $bodyColor;
+  background-color: base.$bodyColor;
 }
 
 body::-webkit-scrollbar {
@@ -36,11 +36,11 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   border-radius: 7px;
-  background-color: $themeColor2;
+  background-color: base.$themeColor2;
 }
 
 body::-webkit-scrollbar-thumb:hover {
-  background-color: $hoverColor;
+  background-color: base.$hoverColor;
 }
 
 body::-webkit-scrollbar-track {
@@ -67,15 +67,15 @@ img {
 }
 
 ::selection {
-  background: $themeColor2 !important;
+  background: base.$themeColor2 !important;
 }
 
 // antd的message
 .ant-message-notice-content {
-  background-color: $themeColor1 !important;
+  background-color: base.$themeColor1 !important;
   border-radius: 14px !important;
   font-family: 'dengxian' !important;
-  color: $textColor !important;
+  color: base.$textColor !important;
   font-size: 18px !important;
 }
 

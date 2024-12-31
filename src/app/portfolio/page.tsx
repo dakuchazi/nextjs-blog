@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import { Title } from "@/utils/titleConfig";
 import axios from "@/utils/axios";
 import { Metadata } from 'next';
-import Item from "./components/Item";
+import PortfolioItem from "./components/PortfolioItem";
 
 import s from "./page.module.scss";
 
@@ -51,7 +51,6 @@ interface PortfoliosResponse {
 async function getPortfolios() {
   try {
     const res = await axios.get('portfolios?populate=cover&pagination[pageSize]=10000&sort[publishedAt]=desc');
-    console.log('===res.data===', res.data);
     return res.data as PortfoliosResponse;
   } catch (error) {
     console.error('获取作品列表失败:', error);
@@ -73,10 +72,10 @@ export default async function PortfoliosPage() {
   const portfolios = await getPortfolios();
 
   return (
-    <Layout title={Title.Portfolio} className={s.showBox}>
+    <Layout title={Title.Portfolio} className={s.box}>
       {portfolios.data.length > 0 ? (
         portfolios.data.map((item) => (
-          <Item
+          <PortfolioItem
             key={item.id}
             cover={item.cover.url}
             link={item.url}
