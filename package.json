@@ -14,6 +14,7 @@
     "axios": "^1.7.9",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
+    "framer-motion": "^11.15.0",
     "jinrishici": "^1.0.6",
     "next": "15.1.3",
     "react": "^18.2.0",

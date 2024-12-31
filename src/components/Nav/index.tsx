@@ -70,7 +70,7 @@ const Nav: React.FC = () => {
       <nav className={classNames(s.nav, { [s.hiddenNav]: !navShow })}>
         <div className={s.navContent}>
           {/* 主页 */}
-          <Link href="/" className={s.homeBtn}>
+          <Link href="/" prefetch={true} className={s.homeBtn}>
             <HomeOutlined />
           </Link>
 
@@ -112,6 +112,7 @@ const Nav: React.FC = () => {
                 <Link
                   className={isActiveLink(item.to) ? s.sedActive : s.articelsSecondItem}
                   href={item.to}
+                  prefetch={true}
                   key={index}
                 >
                   {item.name}
@@ -127,6 +128,7 @@ const Nav: React.FC = () => {
               className={isActiveLink(item.to) ? s.navActive : s.navBtn}
               href={item.to}
               key={index}
+              prefetch={true}
             >
               {item.name}
             </Link>
@@ -148,6 +150,7 @@ const Nav: React.FC = () => {
               className={isActiveLink(item.to) ? s.mobileNavActive : s.mobileNavItem}
               href={item.to}
               key={index}
+              prefetch={true}
             >
               {item.name}
             </Link>

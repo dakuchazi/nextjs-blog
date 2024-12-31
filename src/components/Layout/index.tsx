@@ -5,7 +5,6 @@ import classNames from "classnames";
 import React, { ReactNode } from "react";
 import { siteTitle } from "@/utils/constant";
 import Card from "@/components/Card";
-import LayoutLoading from "../LayoutLoading";
 import PageTitle from "../PageTitle";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Category } from "@/app/page";
@@ -59,7 +58,7 @@ const Layout: React.FC<Props> = ({
         )}
       </PageTitle>
       <Card isStatic={true} className={classNames(s.layoutCard, className)}>
-        {loading ? <LayoutLoading rows={rows} /> : children}
+        {children}
       </Card>
     </>
   );

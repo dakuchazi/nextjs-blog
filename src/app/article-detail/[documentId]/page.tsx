@@ -48,9 +48,9 @@ interface ArticleResponse {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     documentId: string;
-  };
+  }>;
 }
 
 
@@ -66,9 +66,8 @@ async function getArticle(documentId: string): Promise<ArticleResponse> {
 }
 
 // 生成元数据
-export async function generateMetadata(
-  { params }: PageProps
-): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const article = await getArticle(params.documentId);
   return {
     description: article.data.description
@@ -76,9 +75,8 @@ export async function generateMetadata(
 }
 
 // 页面组件
-export default async function ArtDetail({ params }: PageProps) {
-  const { documentId } = await params
-
+export default async function ArtDetail(props: PageProps) {
+  const params = await props.params;
   const article = await getArticle(params.documentId);
   const content = article.data.blocks[0]?.body || '';
 

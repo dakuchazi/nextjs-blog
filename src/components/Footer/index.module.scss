@@ -1,5 +1,5 @@
-@import '../../styles/base.scss';
-@import '../../styles/style.scss';
+@use '../../styles/base.scss' as *;
+@use '../../styles/style.scss';
 
 .footer {
   height: $footerHeight;
@@ -17,6 +17,7 @@
     color: $textColor;
     @extend .trans;
   }
+
   .text:hover {
     color: $hoverColor;
   }
@@ -29,6 +30,7 @@
     user-select: none;
     @extend .hover;
   }
+
   .siteFrame:last-child {
     margin-right: 0;
   }

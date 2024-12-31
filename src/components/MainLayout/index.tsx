@@ -9,6 +9,7 @@ import { useLocalStorageState, useMount } from 'ahooks'
 import { Theme } from '@/contexts/ThemeContext/types'
 
 import s from './index.module.scss'
+import PageTransition from '../PageTransition'
 
 
 export default function MainLayout({
@@ -31,7 +32,9 @@ export default function MainLayout({
             <Nav />
             <main className={s.main}>
                 <div className={s.center}>
-                    {children}
+                    <PageTransition>
+                        {children}
+                    </PageTransition>
                 </div>
             </main>
             <Footer />

@@ -1,4 +1,4 @@
-@import '../../styles/base.scss';
+@use '../../styles/base.scss' as *;
 
 
 @font-face {
@@ -8,6 +8,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
 
 .main {
     min-height: calc(100vh - #{$footerHeight + 2 * $space});
