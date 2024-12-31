@@ -1,10 +1,8 @@
-import dayjs from "dayjs";
 import React, { MouseEventHandler } from "react";
-
 import Card from "@/components/Card";
+import PostCardLoading from "./PostCardLoading";
 
 import s from "./index.module.scss";
-import PostCardLoading from "./PostCardLoading";
 
 interface Props {
   title?: string;

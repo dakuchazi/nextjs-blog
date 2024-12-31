@@ -4,11 +4,12 @@ import { useMount, useTitle } from "ahooks";
 import classNames from "classnames";
 import React, { ReactNode } from "react";
 import { siteTitle } from "@/utils/constant";
-import useTop from "@/utils/hooks/useTop";
 import Card from "@/components/Card";
 import LayoutLoading from "../LayoutLoading";
 import PageTitle from "../PageTitle";
 import { useTheme } from "@/contexts/ThemeContext";
+import { Category } from "@/app/page";
+import dayjs from "dayjs";
 
 import s from "./index.module.scss";
 
@@ -18,8 +19,8 @@ interface Props {
   className?: string;
   setNavShow?: Function;
   loading?: boolean;
-  isPost?: boolean;
-  classes?: string;
+  isArticle?: boolean;
+  category?: Category;
   date?: string;
   rows?: number;
   children: ReactNode
@@ -30,9 +31,9 @@ const Layout: React.FC<Props> = ({
   className,
   loading,
   children,
-  classes,
+  category,
   date,
-  isPost = false,
+  isArticle = false,
   rows,
 }) => {
   const { setNavShow } = useTheme()
@@ -48,12 +49,12 @@ const Layout: React.FC<Props> = ({
     <>
       <PageTitle
         title={title}
-        className={classNames({ [s.postTitle]: isPost })}
+        className={classNames({ [s.postTitle]: isArticle })}
       >
-        {isPost && (
+        {isArticle && (
           <div>
-            <span className={s.articleClass}>{classes}</span>
-            <span className={s.articleDate}>{date}</span>
+            <span className={s.articleClass}>{category?.name}</span>
+            <span className={s.articleDate}>{dayjs(date).format('YYYY-MM-DD HH:mm:ss')}</span>
           </div>
         )}
       </PageTitle>

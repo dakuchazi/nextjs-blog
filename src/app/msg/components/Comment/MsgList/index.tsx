@@ -8,18 +8,36 @@ interface Props {
 }
 
 const MsgList: React.FC<Props> = ({ data }) => {
+  const rootMessages = data.filter(m => !m.parent);
+  const replies = data.filter(m => m.parent);
+
+  const getChildren = (parentId: number) => {
+    return replies.filter(reply => reply.parent === String(parentId));
+  };
   return (
     <>
-      {data.map((msg) => (
+      {rootMessages.map((msg) => (
         <div key={msg.id} className={s.completeMsg}>
           <MsgItem
             id={msg.id}
-            name={msg.nickname}
+            nickname={msg.nickname}
             date={msg.createdAt}
             content={msg.body[0]?.body || ''}
             email={msg.email}
             avatar={msg.avatar}
           />
+          {getChildren(msg.id).map(reply => (
+            <MsgItem
+              key={reply.id}
+              id={reply.id}
+              nickname={reply.nickname}
+              date={reply.createdAt}
+              content={reply.body[0]?.body || ''}
+              email={reply.email}
+              avatar={reply.avatar}
+              isReply={true}
+            />
+          ))}
         </div>
       ))}
     </>

@@ -7,19 +7,31 @@ import {
 } from "ahooks";
 import classNames from "classnames";
 import React, { useRef, useState } from "react";
-import { defaultCommentAvatar, myAvatar70, myEmail, myLink, myName, myQQ } from "@/utils/constant";
+import { defaultCommentAvatar, myEmail, myQQ } from "@/utils/constant";
 import AdminBox from "./AdminBox";
 import PreShow from "./PreShow";
 import axios from "@/utils/axios";
 import { toast } from "@/components/Toast";
 
 import s from "./index.module.scss";
+interface ReplyTo {
+  id: number;
+  nickname: string;
+}
 
-interface Props {
+interface EditBoxProps {
+  isReply?: boolean;
+  replyTo?: ReplyTo;
+  onCancelReply?: () => void;
   refresh?: () => void;
 }
 
-const EditBox: React.FC<Props> = ({ refresh }) => {
+
+const EditBox: React.FC<EditBoxProps> = ({
+  isReply = false,
+  replyTo,
+  onCancelReply,
+  refresh }) => {
   const QQRef = useRef(null);
   const [showAdmin, setShowAdmin] = useState(false);
   const [showPre, { toggle: togglePre, setFalse: closePre }] =
@@ -81,25 +93,31 @@ const EditBox: React.FC<Props> = ({ refresh }) => {
     try {
       validate();
       const submitData = {
-        data: {
-          nickname: formData.nickname,
-          email: formData.email,
-          link: formData.link || null,
-          avatar: formData.avatar || getRandomAvatar(),
-          QQNumber: formData.QQNumber || null,
-          body: [{
-            __component: "shared.rich-text",
-            body: text
-          }]
-        }
+        nickname: formData.nickname,
+        email: formData.email,
+        link: formData.link || null,
+        avatar: formData.avatar || getRandomAvatar(),
+        QQNumber: formData.QQNumber || null,
+        ...(isReply && replyTo ? { parent: String(replyTo.id) } : {}),
+        body: [{
+          __component: "shared.rich-text",
+          body: text
+        }]
+
       };
-      const res = await axios.post('/msgs', submitData);
-      if (res.data) {
+      const res = await axios.post('/msgs', { data: submitData });
+      console.log('===res===', res);
+      if (res.data.data) {
         toast.success('发布成功！');
         localStorage.setItem("userInfo", JSON.stringify(formData))
         setText("");
         closePre();
         refresh?.()
+        if (isReply) {
+          onCancelReply?.();
+        }
+      } else {
+        toast.error(res.data.error.message);
       }
     } catch (error: any) {
       if (error.message === "breakForEach") return;
@@ -133,10 +151,6 @@ const EditBox: React.FC<Props> = ({ refresh }) => {
     togglePre();
   };
 
-  // const handleCloseReply = () => {
-  //   closeReply?.();
-  // };
-
   useMount(() => {
     const userInfo = localStorage.getItem('userInfo')
     if (userInfo) {
@@ -146,14 +160,8 @@ const EditBox: React.FC<Props> = ({ refresh }) => {
 
   return (
     <div className={classNames(s.editBox)}>
-      {/* {isReply && (
-        <div className={s.replyNameBox}>
-          回复给「<span>{replyName}</span>」：
-        </div>
-      )} */}
       <div className={s.flex}>
         <AdminBox visible={showAdmin} setVisible={setShowAdmin} />
-
         <div className={s.avatarBoxCol}>
           <div className={s.avatarBox}>
             {formData.avatar ? (
@@ -164,51 +172,54 @@ const EditBox: React.FC<Props> = ({ refresh }) => {
           </div>
         </div>
         <div className={s.editInputBox}>
-          <div className={s.inputBox}>
-            <div className={classNames(s.inputInfo, s.flex2)}>
-              <div className={s.inputKey}>昵称</div>
-              <input
-                type="text"
-                className={s.inputValue}
-                placeholder="必填"
-                value={formData.nickname}
-                onChange={(e) => setFormData({ nickname: e.target.value })}
-              />
+          <div>
+            <div className={s.inputBox}>
+              <div className={classNames(s.inputInfo, s.flex2)}>
+                <div className={s.inputKey}>昵称</div>
+                <input
+                  type="text"
+                  className={s.inputValue}
+                  placeholder="必填"
+                  value={formData.nickname}
+                  onChange={(e) => setFormData({ nickname: e.target.value })}
+                />
+              </div>
+              <div className={classNames(s.inputInfo, s.flex2)}>
+                <div className={s.inputKey}>邮箱</div>
+                <input
+                  type="text"
+                  className={s.inputValue}
+                  placeholder="必填"
+                  value={formData.email}
+                  onChange={(e) => (setFormData({ email: e.target.value }))}
+                />
+              </div>
             </div>
-            <div className={classNames(s.inputInfo, s.flex2)}>
-              <div className={s.inputKey}>邮箱</div>
-              <input
-                type="text"
-                className={s.inputValue}
-                placeholder="必填"
-                value={formData.email}
-                onChange={(e) => (setFormData({ email: e.target.value }))}
-              />
-            </div>
-            <div className={classNames(s.inputInfo, s.flex2)}>
-              <div className={s.inputKey}>QQ</div>
-              <input
-                type="text"
-                ref={QQRef}
-                className={s.inputValue}
-                placeholder="选填"
-                value={formData.QQNumber}
-                onChange={(e) => setFormData({ QQNumber: e.target.value })}
-                onBlur={handleQQ}
-              />
-            </div>
-            <div className={classNames(s.inputInfo, s.flex2)}>
-              <div className={s.inputKey}>网址</div>
-              <input
-                type="text"
-                className={s.inputValue}
-                placeholder="选填"
-                value={formData.link}
-                onChange={(e) => setFormData({ link: e.target.value })}
-              />
+            <div className={s.inputBox}>
+              <div className={classNames(s.inputInfo, s.flex2)}>
+                <div className={s.inputKey}>QQ</div>
+                <input
+                  type="text"
+                  ref={QQRef}
+                  className={s.inputValue}
+                  placeholder="选填"
+                  value={formData.QQNumber}
+                  onChange={(e) => setFormData({ QQNumber: e.target.value })}
+                  onBlur={handleQQ}
+                />
+              </div>
+              <div className={classNames(s.inputInfo, s.flex2)}>
+                <div className={s.inputKey}>网址</div>
+                <input
+                  type="text"
+                  className={s.inputValue}
+                  placeholder="选填"
+                  value={formData.link}
+                  onChange={(e) => setFormData({ link: e.target.value })}
+                />
+              </div>
             </div>
           </div>
-
           <div className={s.textareaBox}>
             <textarea
               className={s.textarea}
@@ -218,11 +229,11 @@ const EditBox: React.FC<Props> = ({ refresh }) => {
             />
           </div>
           <div className={s.commentBtns}>
-            {/* {isReply && (
-              <div className={s.cancelBtn} onClick={handleCloseReply}>
+            {isReply && replyTo && (
+              <div className={s.cancelBtn} onClick={onCancelReply}>
                 取消
               </div>
-            )} */}
+            )}
             <div className={s.previewBtn} onClick={openPreShow}>
               预览
             </div>

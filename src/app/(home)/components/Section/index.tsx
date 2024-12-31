@@ -51,7 +51,7 @@ const Section: React.FC<SectionProps> = ({ articles, pagination }) => {
           content={article.description}
           date={dayjs(article.publishedAt).format('YYYY-MM-DD HH:mm:ss')}
           tags={article.tags}
-          onClick={() => router.push(`/artDetail?artId=${article.id}`)}
+          onClick={() => router.push(`/article-detail/${article.documentId}`)}
         />
       ))}
       <MyPagination

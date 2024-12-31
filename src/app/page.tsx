@@ -111,7 +111,7 @@ async function getNotice() {
     }
 }
 
-// 获取文章的函数
+// 获取文章
 async function getArticles(): Promise<ArticlesResponse> {
     try {
         const res = await axios.get('/articles?populate=tags&sort[publishedAt]=desc');

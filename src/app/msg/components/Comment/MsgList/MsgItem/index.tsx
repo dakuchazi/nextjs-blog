@@ -1,20 +1,19 @@
 import "dayjs/locale/zh-cn";
 import classNames from "classnames";
+import { MessageOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import React from "react";
+import React, { useState } from "react";
 import MarkDown from "@/components/MarkDown";
 import { myEmail, smallLoadingUrl } from "@/utils/constant";
 import { useLazyImg } from "@/utils/hooks/useLazyImg";
+import EditBox from "../../EditBox";
+import Modal from "@/components/Model";
 
 import s from "./index.module.scss";
 
-dayjs.locale("zh-cn");
-dayjs.extend(relativeTime);
-
 interface Props {
   id: number;
-  name: string;
+  nickname: string;
   date?: string;
   content?: string;
   email: string;
@@ -24,7 +23,8 @@ interface Props {
 }
 
 const MsgItem: React.FC<Props> = ({
-  name,
+  id,
+  nickname,
   date,
   content,
   email,
@@ -33,6 +33,7 @@ const MsgItem: React.FC<Props> = ({
   isReply,
 }) => {
   const { imgRef, imgUrl } = useLazyImg(avatar || smallLoadingUrl, smallLoadingUrl);
+  const [showReplyModal, setShowReplyModal] = useState(false);
 
   return (
     <div className={classNames(s.commentItem, { [s.marginLeft]: isReply })}>
@@ -40,14 +41,18 @@ const MsgItem: React.FC<Props> = ({
         <div ref={imgRef} className={s.avatarBox}>
           <img
             src={imgUrl}
-            alt={name}
+            alt={nickname}
             className={classNames({
               [s.avatar]: imgUrl !== smallLoadingUrl,
               [s.loading]: imgUrl === smallLoadingUrl,
             })}
           />
         </div>
-
+        {!isReply && (
+          <div className={s.replyBtn} onClick={() => setShowReplyModal(true)}>
+            <MessageOutlined />
+          </div>
+        )}
         <div className={s.contentBox}>
           <div className={s.usrInfo}>
             <a
@@ -57,15 +62,30 @@ const MsgItem: React.FC<Props> = ({
               className={s.name}
               style={{ cursor: link ? "pointer" : "default" }}
             >
-              {name}
+              {nickname}
             </a>
             {email === myEmail && <span className={s.flag}>站长</span>}
-            <span className={s.date}>{dayjs(date).fromNow()}</span>
+            <span className={s.date}>{dayjs(date).format('YYYY-MM-DD HH:mm:ss')}</span>
           </div>
           <MarkDown content={content || ""} className={s.content} />
         </div>
       </div>
-    </div >
+
+      <Modal
+        title={`回复给：${name}`}
+        visible={showReplyModal}
+        onClose={() => setShowReplyModal(false)}
+      >
+        <EditBox
+          isReply={true}
+          replyTo={{ id, nickname }}
+          onCancelReply={() => setShowReplyModal(false)}
+        />
+      </Modal>
+    </div>
+
+
+
   );
 };
 

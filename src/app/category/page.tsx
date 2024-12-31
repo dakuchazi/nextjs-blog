@@ -3,6 +3,7 @@ import { Title } from "@/utils/titleConfig";
 import axios from "@/utils/axios";
 import CategoryItem from "./components/CategoryItem";
 import { Metadata } from 'next';
+import { Category } from "../page";
 
 import s from "./page.module.scss";
 
@@ -10,16 +11,6 @@ export const metadata: Metadata = {
   description: '文章分类'
 };
 
-interface Category {
-  id: number;
-  documentId: string;
-  name: string;
-  description: string | null;
-  publishedAt: string;
-  articles: {
-    count: number;
-  }
-}
 
 interface CategoriesResponse {
   data: Category[];

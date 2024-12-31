@@ -34,7 +34,7 @@ const Comment: React.FC<Props> = ({
       <MsgList data={data.data} />
       <MyPagination
         current={current}
-        defaultPageSize={25}  // 改为25以匹配API请求
+        defaultPageSize={10}
         total={data.meta.pagination.total}
         setPage={setPage}
         autoScroll={autoScroll}

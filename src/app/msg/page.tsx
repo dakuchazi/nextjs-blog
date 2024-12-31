@@ -18,7 +18,7 @@ export interface Message {
   nickname: string;
   email: string;
   body: RichText[];
-  parent: number | null;
+  parent: string | null;
   avatar: string;
   createdAt: string;
 }
@@ -41,7 +41,7 @@ const Msg = () => {
 
   const fetchMessages = async (page: number) => {
     try {
-      const res = await axios.get(`/msgs?populate=*&sort[updatedAt]=desc&pagination[page]=${page}&pagination[pageSize]=${25}`);
+      const res = await axios.get(`/msgs?populate=*&sort[updatedAt]=desc&pagination[page]=${page}&pagination[pageSize]=${10}`);
       setMessages(res.data);
     } catch (error) {
       console.error('获取留言失败:', error);

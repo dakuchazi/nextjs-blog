@@ -77,7 +77,7 @@ const ArticleList = () => {
             key={article.id}
             content={article.title}
             right={new Date(article.createdAt).toLocaleDateString()}
-            onClick={() => router.push(`/artDetail?artId=${article.id}`)}
+            onClick={() => router.push(`/article-detail/${article.documentId}`)}
           />
         ))
       ) : (
