@@ -114,7 +114,7 @@ async function getNotice() {
 // 获取文章
 async function getArticles(): Promise<ArticlesResponse> {
     try {
-        const res = await axios.get('/articles?populate=tags&sort[publishedAt]=desc');
+        const res = await axios.get('/articles?populate=tags&pagination[pageSize]=5&pagination[page]=1&sort[publishedAt]=desc');
         return res.data;
     } catch (error) {
         console.error('获取文章失败:', error);
@@ -123,7 +123,7 @@ async function getArticles(): Promise<ArticlesResponse> {
             meta: {
                 pagination: {
                     page: 1,
-                    pageSize: 25,
+                    pageSize: 5,
                     pageCount: 0,
                     total: 0
                 }

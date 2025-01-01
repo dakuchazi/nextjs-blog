@@ -22,11 +22,11 @@ const DataCard: React.FC<Props> = ({ articleCount, tagsCount, categoriesCount })
         <div className={s.name}>文章</div>
         <div className={s.num}>{articleCount}</div>
       </div>
-      <div className={s.blogData} onClick={() => router.push("/classes")}>
+      <div className={s.blogData} onClick={() => router.push("/category")}>
         <div className={s.name}>分类</div>
         <div className={s.num}>{categoriesCount}</div>
       </div>
-      <div className={s.blogData} onClick={() => router.push("/tags")}>
+      <div className={s.blogData} onClick={() => router.push("/tag")}>
         <div className={s.name}>标签</div>
         <div className={s.num}>{tagsCount}</div>
       </div>

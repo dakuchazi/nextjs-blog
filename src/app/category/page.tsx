@@ -41,9 +41,8 @@ export default async function CategoriesPage() {
         <CategoryItem
           key={category.id}
           className={s.classItem}
-          content={category.name}
-          num={category.articles.count} // 如果需要显示文章数量，需要额外获取
-          onClick={`/artList?typeId=${category.id}&key=type`}
+          name={category.name}
+          num={category.articles.count}
         />
       ))}
     </Layout>

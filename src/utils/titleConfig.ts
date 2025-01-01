@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 export enum Title {
-  Article = '所有文章',
+  Article = '搜索文章',
   Category = '分类',
   Tag = '标签',
   StatusUpdate = '自言自语',

@@ -5,6 +5,7 @@ import { ToastContainer } from '@/components/Toast'
 
 import '@/styles/global.scss'
 
+export const dynamic = 'force-dynamic'
 
 export default function RootLayout({
   children,

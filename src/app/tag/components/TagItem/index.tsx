@@ -15,7 +15,7 @@ export default function TagItem({ id, name, count }: TagItemProps) {
     return (
         <span
             className={s.tagItem}
-            onClick={() => router.push(`/artList?tag=${id}&key=tag`)}
+            onClick={() => router.push(`/article-list?tag=${name}`)}
         >
             {name}
             {count !== undefined && count > 0 && (

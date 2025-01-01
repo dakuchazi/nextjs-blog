@@ -1,93 +1,53 @@
-'use client'
-
-import React, { useState, useEffect } from "react";
-import Layout from "@/components/Layout";
-import MyPagination from "@/components/MyPagination";
+import { Metadata } from 'next';
 import { detailPostSize } from "@/utils/constant";
-import DisplayBar from "@/components/DisplayBar";
-import Search from "./components/Search";
-import { Title } from "@/utils/titleConfig";
-import { useRouter } from 'next/navigation';
-import axios from "@/utils/axios";
 import { ArticlesResponse } from "../page";
+import ArticleList from './components/ArticleList';
 
-const ArticleList = () => {
-  const router = useRouter();
-  const [articles, setArticles] = useState<ArticlesResponse>({
-    data: [],
-    meta: { pagination: { page: 1, pageSize: detailPostSize, pageCount: 0, total: 0 } }
-  });
-  const [loading, setLoading] = useState(true);
-  const [title, setTitle] = useState('');
-  const [current, setCurrent] = useState(1);
+export const dynamic = 'force-dynamic';
 
-  const fetchArticles = async (searchTitle: string, page: number) => {
-    setLoading(true);
-    try {
-      const queryString = new URLSearchParams({
-        'populate': 'tags',
-        'filters[title][$contains]': searchTitle,
-        'pagination[page]': String(page),
-        'pagination[pageSize]': String(detailPostSize)
-      }).toString();
+// 根据 URL 参数获取文章
+async function getArticles(searchParams: { tag?: string; category?: string }): Promise<ArticlesResponse> {
+  try {
+    const queryParams: Record<string, string> = {
+      'populate': '*',
+      'pagination[page]': '1',
+      'pagination[pageSize]': String(detailPostSize)
+    };
 
-      const res = await axios.get(`/articles?${queryString}`);
-      setArticles(res.data);
-    } catch (error) {
-      console.error('获取文章失败:', error);
-    } finally {
-      setLoading(false);
+    if (searchParams.tag) {
+      queryParams['filters[tags][name][$contains]'] = searchParams.tag;
     }
-  };
 
-  // 初始加载
-  useEffect(() => {
-    fetchArticles('', 1);
-  }, []);
+    if (searchParams.category) {
+      queryParams['filters[category][name][$contains]'] = searchParams.category;
+    }
 
-  const handleSearch = () => {
-    setCurrent(1);
-    fetchArticles(title, 1);
-  };
+    const queryString = new URLSearchParams(queryParams).toString();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/articles?${queryString}`, {
+      cache: 'no-store'
+    });
 
-  const handlePageChange = (page: number) => {
-    setCurrent(page);
-    fetchArticles(title, page);
-  };
+    if (!res.ok) throw new Error('Failed to fetch articles');
+    return res.json();
+  } catch (error) {
+    console.error('获取文章失败:', error);
+    return {
+      data: [],
+      meta: { pagination: { page: 1, pageSize: detailPostSize, pageCount: 0, total: 0 } }
+    };
+  }
+}
 
-  return (
-    <Layout title={Title.Article}>
-      <Search
-        value={title}
-        onChange={setTitle}
-        onSearch={handleSearch}
-      />
+export default async function ArticlesPage({
+  searchParams,
+}: {
+  searchParams: { tag?: string; category?: string }
+}) {
+  const initialArticles = await getArticles(searchParams);
 
-      {loading ? (
-        <div className="text-center py-4">加载中...</div>
-      ) : articles.data.length ? (
-        articles.data.map((article) => (
-          <DisplayBar
-            key={article.id}
-            content={article.title}
-            right={new Date(article.createdAt).toLocaleDateString()}
-            onClick={() => router.push(`/article-detail/${article.documentId}`)}
-          />
-        ))
-      ) : (
-        <div className="text-center py-4">暂时无相应文章 ~</div>
-      )}
-
-      <MyPagination
-        current={current}
-        defaultPageSize={detailPostSize}
-        total={articles.meta.pagination.total}
-        setPage={handlePageChange}
-        autoScroll={true}
-        scrollToTop={440}
-      />
-    </Layout>
-  );
-};
-
-export default ArticleList;
+  return <ArticleList
+    initialArticles={initialArticles}
+    initialTag={searchParams.tag || ''}
+    initialCategory={searchParams.category || ''}
+  />;
+}

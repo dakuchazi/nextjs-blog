@@ -7,21 +7,20 @@ import { useRouter } from 'next/navigation';
 import s from './index.module.scss';
 
 interface Props {
-  content: string;
+  name: string;
   num?: number;
-  onClick?: string;
   className?: string;
 }
 
-const CategoryItem: React.FC<Props> = ({ content, num = 0, onClick, className }) => {
+const CategoryItem: React.FC<Props> = ({ name, num = 0, className }) => {
   const router = useRouter();
 
   return (
     <div
       className={classNames(s.classBar, className)}
-      onClick={() => onClick && router.push(onClick)}
+      onClick={() => router.push(`/article-list?category=${name}`)}
     >
-      {content}
+      {name}
       <div className={s.classNum}>{num}</div>
     </div>
   );

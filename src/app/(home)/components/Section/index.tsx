@@ -34,13 +34,13 @@ interface SectionProps {
 
 const Section: React.FC<SectionProps> = ({ articles, pagination }) => {
   const router = useRouter();
-  const [current, setCurrent] = useState(pagination.page);
-  const [scrollPosition, setScrollPosition] = useState(0);
+  // const [current, setCurrent] = useState(pagination.page);
+  // const [scrollPosition, setScrollPosition] = useState(0);
 
 
-  useEffect(() => {
-    setScrollPosition(document.body.clientHeight - 80);
-  }, []);
+  // useEffect(() => {
+  //   setScrollPosition(document.body.clientHeight - 80);
+  // }, []);
 
   return (
     <section className={s.section}>
@@ -54,14 +54,14 @@ const Section: React.FC<SectionProps> = ({ articles, pagination }) => {
           onClick={() => router.push(`/article-detail/${article.documentId}`)}
         />
       ))}
-      <MyPagination
+      {/* <MyPagination
         current={current}
         defaultPageSize={pagination.pageSize}
         total={pagination.total}
         setPage={setCurrent}
         autoScroll={true}
         scrollToTop={scrollPosition}
-      />
+      /> */}
     </section>
   );
 };
