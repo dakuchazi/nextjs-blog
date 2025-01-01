@@ -215,6 +215,31 @@
   }
 }
 
+
+.drawer {
+  display: none;
+
+  :global(.ant-drawer-content-wrapper) {
+    width: 90rem !important;
+  }
+
+  :global(.ant-drawer-header-close-only) {
+    display: none;
+  }
+
+  :global(.ant-drawer-body) {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  :global(.ant-drawer-content) {
+    background-color: base.$themeColor;
+    color: base.$textColor;
+  }
+}
+
 @media screen and (max-width: 1240px) {
   .nav {
     display: none;
@@ -222,5 +247,9 @@
 
   .mobileNavBtn {
     display: flex;
+  }
+
+  .drawer {
+    display: block;
   }
 }

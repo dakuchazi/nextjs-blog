@@ -1,5 +1,5 @@
 
-'use client';  // 添加这个声明
+'use client';
 
 import {
   BgColorsOutlined,
@@ -9,7 +9,6 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import {
-  useEventListener,
   useLocalStorageState,
   useSafeState,
   useUpdateEffect,
@@ -21,15 +20,13 @@ import { blogAdminUrl } from "@/utils/constant";
 import { modeMap, modeMapArr } from "@/utils/modeMap";
 import { useLinkList } from "./config";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Theme } from "@/contexts/ThemeContext/types";
 
-import "./index.custom.scss";
 import s from "./index.module.scss";
 
 const Nav: React.FC = () => {
-  const router = useRouter()
   const pathname = usePathname();
   const { theme, setTheme, navShow, setNavShow } = useTheme()
   const [_, setLocalMode] = useLocalStorageState("localMode");
@@ -44,7 +41,6 @@ const Nav: React.FC = () => {
 
   const isActiveLink = (path: string) => pathname === path;
 
-  // 将 DOM 操作移到 useEffect 中
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {
       setNavShow(event.deltaY < 0);
@@ -142,7 +138,7 @@ const Nav: React.FC = () => {
         placement="right"
         onClose={() => setVisible(false)}
         open={visible}
-        className="mobile-nav-box"
+        rootClassName={s.drawer}
       >
         <div className={s.mobileNavBox}>
           {mobileNavArr.map((item, index) => (
