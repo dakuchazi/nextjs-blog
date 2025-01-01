@@ -11,7 +11,6 @@ import { Theme } from '@/contexts/ThemeContext/types'
 import s from './index.module.scss'
 import PageTransition from '../PageTransition'
 
-
 export default function MainLayout({
     children,
 }: {
