@@ -8,14 +8,14 @@ import "./index.custom.scss";
 
 
 interface Props {
-  setNavShow?: Function;
+  setNavShow?: () => void;
 }
 
 const BackToTop: React.FC<Props> = () => {
   const { theme, setTheme, navShow, setNavShow } = useTheme()
 
   const backTop = () => {
-    (setNavShow(true));
+    setNavShow(true);
   };
 
   return (

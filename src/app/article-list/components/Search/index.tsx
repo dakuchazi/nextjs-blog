@@ -6,8 +6,8 @@ import s from "./index.module.scss";
 
 interface Props {
   value: string;
-  onSearch: Function;
-  onChange: Function;
+  onSearch: () => void;
+  onChange: (value: string) => void;
 }
 
 const Search: React.FC<Props> = ({ value, onSearch, onChange }) => {

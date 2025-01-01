@@ -10,7 +10,7 @@ interface Props {
   current?: number;
   defaultPageSize?: number;
   total?: number;
-  setPage?: Function;
+  setPage?: (value: number) => void;
   scrollToTop?: number;
   autoScroll?: boolean;
 }

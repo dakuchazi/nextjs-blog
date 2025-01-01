@@ -16,7 +16,7 @@ import s from "./index.module.scss";
 interface Props {
   title?: string;
   className?: string;
-  setNavShow?: Function;
+  setNavShow?: () => void;
   loading?: boolean;
   isArticle?: boolean;
   category?: Category;

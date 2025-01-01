@@ -7,22 +7,19 @@ import { detailPostSize } from "@/utils/constant";
 import DisplayBar from "@/components/DisplayBar";
 import Search from "./components/Search";
 import { Title } from "@/utils/titleConfig";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import axios from "@/utils/axios";
 import { ArticlesResponse } from "../page";
 
-
-
 const ArticleList = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [articles, setArticles] = useState<ArticlesResponse>({
     data: [],
     meta: { pagination: { page: 1, pageSize: detailPostSize, pageCount: 0, total: 0 } }
   });
   const [loading, setLoading] = useState(true);
-  const [title, setTitle] = useState(searchParams.get('title') || '');
-  const [current, setCurrent] = useState(Number(searchParams.get('page')) || 1);
+  const [title, setTitle] = useState('');
+  const [current, setCurrent] = useState(1);
 
   const fetchArticles = async (searchTitle: string, page: number) => {
     setLoading(true);
@@ -43,22 +40,19 @@ const ArticleList = () => {
     }
   };
 
-  // 初始加载和 URL 参数变化时获取数据
+  // 初始加载
   useEffect(() => {
-    const currentTitle = searchParams.get('title') || '';
-    const currentPage = Number(searchParams.get('page')) || 1;
-    fetchArticles(currentTitle, currentPage);
-  }, [searchParams]);
+    fetchArticles('', 1);
+  }, []);
 
   const handleSearch = () => {
-    router.push(`/articles?title=${title}&page=1`);
     setCurrent(1);
+    fetchArticles(title, 1);
   };
 
   const handlePageChange = (page: number) => {
     setCurrent(page);
-    const currentSearch = title ? `&title=${title}` : '';
-    router.push(`/articles?page=${page}${currentSearch}`);
+    fetchArticles(title, page);
   };
 
   return (

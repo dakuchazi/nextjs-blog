@@ -6,7 +6,7 @@ import MarkDown from '@/components/MarkDown';
 import s from './index.module.scss';
 
 interface Props {
-  closePre?: Function;
+  closePre?: () => void;
   content?: string;
   className?: string;
 }
