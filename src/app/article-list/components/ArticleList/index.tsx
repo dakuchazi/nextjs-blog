@@ -9,12 +9,14 @@ import Search from "../Search";
 import { Title } from "@/utils/titleConfig";
 import { useRouter } from 'next/navigation';
 import axios from "@/utils/axios";
-import { ArticlesResponse } from "@/app/page";
+import { ArticlesResponse, Category, Tag } from "@/app/page";
 
 interface ArticleListProps {
     initialArticles: ArticlesResponse;
-    initialTag?: string;
-    initialCategory?: string;
+    initialTag?: string | null;
+    initialCategory?: string | null;
+    tags: Tag[];
+    categories: Category[];
 }
 
 interface QueryParams {
@@ -24,7 +26,7 @@ interface QueryParams {
     'pagination[pageSize]': string;
 }
 
-const ArticleList = ({ initialArticles, initialTag = '', initialCategory = '' }: ArticleListProps) => {
+const ArticleList = ({ initialArticles, initialTag = null, initialCategory = null, tags, categories }: ArticleListProps) => {
     const router = useRouter();
     const [articles, setArticles] = useState<ArticlesResponse>(initialArticles);
     const [loading, setLoading] = useState(false);
@@ -87,7 +89,7 @@ const ArticleList = ({ initialArticles, initialTag = '', initialCategory = '' }:
 
     const handleReset = () => {
         router.replace('/article-list');
-        setSearchValues({ title: '', tag: '', category: '' });
+        setSearchValues({ title: '', tag: null, category: null });
         setCurrent(1);
         fetchArticles({ title: '', tag: '', category: '' }, 1);
     };
@@ -108,6 +110,8 @@ const ArticleList = ({ initialArticles, initialTag = '', initialCategory = '' }:
                 onChange={handleSearchChange}
                 onSearch={handleSearch}
                 onReset={handleReset}
+                tags={tags}
+                categories={categories}
             />
 
             {loading ? (
@@ -117,7 +121,7 @@ const ArticleList = ({ initialArticles, initialTag = '', initialCategory = '' }:
                     <DisplayBar
                         key={article.id}
                         content={article.title}
-                        right={new Date(article.createdAt).toLocaleDateString()}
+                        right={article.createdAt}
                         onClick={() => router.push(`/article-detail/${article.documentId}`)}
                     />
                 ))

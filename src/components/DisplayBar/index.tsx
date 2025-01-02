@@ -1,6 +1,7 @@
 import React, { MouseEventHandler } from 'react';
-
+import dayjs from 'dayjs';
 import DisplayBarLoading from './DisplayBarLoading';
+
 import s from './index.module.scss';
 
 interface Props {
@@ -19,7 +20,7 @@ const DisplayBar: React.FC<Props> = ({ content = '', right = '', loading, onClic
         <>
           <div className={s.content}>{content}</div>
           <div className={s.rightContent}>
-            <div className={s.rightBar}>{right}</div>
+            <div className={s.rightBar}>{dayjs(right).format('YYYY-MM-DD')}</div>
           </div>
         </>
       )}

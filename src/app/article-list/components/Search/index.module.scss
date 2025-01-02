@@ -20,11 +20,60 @@
     text-align: center;
     padding: 0 base.$space;
     color: base.$textColor;
+    appearance: none;
+    cursor: pointer;
 
     &:not(:first-child) {
-      flex: 0.5; // 让tag和category输入框更窄
+      flex: 0.5;
+    }
+
+  }
+
+  .antd-input {
+    height: 50px;
+    border-radius: 14px;
+    background-color: base.$themeColor1;
+    padding: 0 base.$space;
+    flex: 1;
+    color: base.$textColor;
+    border: none;
+
+    &::placeholder {
+      color: base.$textColor;
+    }
+
+    &:not(:first-child) {
+      flex: 0.5;
     }
   }
+
+  .antd-select {
+    height: 50px;
+    border-radius: 14px;
+    background-color: base.$themeColor1;
+    flex: 1;
+    border: none !important;
+
+    :global {
+      .ant-select-selector {
+        padding: 0 20px;
+        background-color: transparent;
+        color: base.$textColor;
+        border: none !important;
+        box-shadow: none !important;
+
+        .ant-select-selection-placeholder {
+          color: base.$textColor
+        }
+      }
+
+    }
+
+    &:not(:first-child) {
+      flex: 0.5;
+    }
+  }
+
 
   .btnBox {
     display: flex;
@@ -53,11 +102,25 @@
       flex-direction: column;
     }
 
-    .search {
+    .antd-input {
+      font-size: 15px;
+      border-radius: 10rem;
+      padding: 4px 10px;
+
+      &:not(:first-child) {
+        flex: 1;
+      }
+    }
+
+    .antd-select {
       height: 40rem;
       border-radius: 10rem;
-      font-size: 18rem;
-      padding: 4rem 10rem;
+
+      :global {
+        .ant-select-selector {
+          padding: 0 10px;
+        }
+      }
 
       &:not(:first-child) {
         flex: 1;
@@ -65,7 +128,7 @@
     }
 
     .btnBox {
-      justify-content: flex-end
+      justify-content: flex-end;
     }
 
     .searchBtn {

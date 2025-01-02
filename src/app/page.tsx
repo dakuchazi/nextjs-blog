@@ -133,7 +133,7 @@ async function getArticles(): Promise<ArticlesResponse> {
 }
 
 // 获取标签
-async function getTags() {
+async function getTags(): Promise<TagsResponse> {
     try {
         const res = await axios.get('tags?pagination[pageSize]=9999&sort[publishedAt]=desc');
         return res.data as TagsResponse;
@@ -144,7 +144,7 @@ async function getTags() {
 }
 
 // 获取分类
-async function getCategories() {
+async function getCategories(): Promise<CategoriesResponse> {
     try {
         const res = await axios.get('categories?fields[0]=id');
         return res.data as CategoriesResponse;

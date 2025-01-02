@@ -1,12 +1,16 @@
+
 import { ArrowRightOutlined, RedoOutlined } from "@ant-design/icons";
-import { useKeyPress } from "ahooks";
 import React, { useRef } from "react";
+import { Category, Tag } from "@/app/page";
+import { Input, Select } from "antd";
+
 import s from "./index.module.scss";
+
 
 interface SearchValues {
   title: string;
-  tag: string;
-  category: string;
+  tag: string | null;
+  category: string | null;
 }
 
 interface Props {
@@ -14,58 +18,58 @@ interface Props {
   onSearch: () => void;
   onChange: (key: keyof SearchValues, value: string) => void;
   onReset: () => void;
+  tags: Tag[];
+  categories: Category[];
 }
 
-const Search: React.FC<Props> = ({ values, onSearch, onChange, onReset }) => {
-  const titleRef = useRef(null);
+const Search: React.FC<Props> = ({ values, onSearch, onChange, onReset, tags, categories }) => {
 
-  useKeyPress(13, () => onSearch(), {
-    target: titleRef,
-  });
-
-  useKeyPress(27, () => onReset(), {
-    target: titleRef,
-  });
 
   return (
     <div className={s.searchBox}>
       <div className={s.inputGroup}>
-        <input
-          ref={titleRef}
-          autoFocus
-          type="text"
+        <Input
           placeholder="搜索文章标题..."
-          className={s.search}
+          className={s['antd-input']}
           value={values.title}
           onChange={(e) => onChange('title', e.target.value)}
         />
-        <input
-          type="text"
-          placeholder="标签..."
-          className={s.search}
+
+        <Select
+          className={s['antd-select']}
+          placeholder="选择标签..."
           value={values.tag}
-          onChange={(e) => onChange('tag', e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="分类..."
-          className={s.search}
+          onChange={(value) => onChange('tag', value)}
+          allowClear
+        >
+          {tags.map(tag => (
+            <Select.Option key={tag.id} value={tag.name}>
+              {tag.name}
+            </Select.Option>
+          ))}
+        </Select>
+        <Select
+          className={s['antd-select']}
+          placeholder="选择分类..."
           value={values.category}
-          onChange={(e) => onChange('category', e.target.value)}
-        />
+          onChange={(value) => onChange('category', value)}
+          allowClear
+        >
+          {categories.map(category => (
+            <Select.Option key={category.id} value={category.name}>
+              {category.name}
+            </Select.Option>
+          ))}
+        </Select>
       </div>
       <div className={s.btnBox}>
-        {/* 搜索按钮 */}
         <div className={s.searchBtn} onClick={onSearch}>
           <ArrowRightOutlined />
         </div>
-
-        {/* 重置按钮 */}
         <div className={s.searchBtn} onClick={onReset}>
           <RedoOutlined />
         </div>
       </div>
-
     </div>
   );
 };
