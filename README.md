@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# My Blog
 
-## Getting Started
+基于 Nextjs 搭建的个人博客。
 
-First, run the development server:
+
+
+## 博客后台
+
+https://github.com/dakuchazi/strapi-blog-admin
+
+
+
+## 开始使用
+
+### 环境要求
+
+Node.js 18.x 或更高版本
+NPM 8.x 或更高版本
+
+### 安装步骤
+
+克隆项目
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+clone https://github.com/dakuchazi/nextjs-blog
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+安装依赖
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+启动开发服务器
 
-## Learn More
+```bash
+npm run develop
+```
 
-To learn more about Next.js, take a look at the following resources:
+服务器将在 http://localhost:3000 启动
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 环境配置说明
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+开发环境接口地址：http://localhost:1337
 
-## Deploy on Vercel
+## 开发指南
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+目录结构
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+├── Dockerfile           # Docker 构建配置
+├── eslint.config.mjs    # ESLint 配置文件
+├── next.config.ts       # Next.js 配置文件
+├── package-lock.json    # 依赖包版本锁定文件
+├── package.json         # 项目依赖配置
+├── postcss.config.mjs   # PostCSS 配置文件
+├── public              # 静态资源目录
+|  ├── favicon.ico      # 网站图标
+|  ├── file.svg         # 文件图标
+|  ├── globe.svg        # 全球图标
+|  ├── next.svg         # Next.js Logo
+|  ├── vercel.svg       # Vercel Logo
+|  └── window.svg       # 窗口图标
+├── README.md           # 项目说明文档
+├── src                 # 源代码目录
+|  ├── app             # Next.js App Router 目录
+|  ├── components      # React 组件
+|  ├── contexts        # React Context 上下文
+|  ├── fonts           # 字体文件
+|  ├── imgs            # 图片资源
+|  ├── styles          # 样式文件
+|  ├── types           # TypeScript 类型定义
+|  └── utils           # 工具函数
+├── tailwind.config.ts  # Tailwind CSS 配置
+└── tsconfig.json       # TypeScript 配置
+```
+
+### API文档
+
+启动strapi后，可以在以下地址访问API文档：
+
+http://localhost:1337/documentation
+
+### 部署
+
+采用Docker部署，修改dockerfile
+
+```dockerfile
+# 设置环境变量
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+ENV NEXT_PUBLIC_API_URL=http://localhost:1337 #修改这里
+# 忽略 ESLint 错误
+ENV NEXT_LINT_DISABLED=1
+
+# 构建应用 (添加 --no-lint 标志来跳过 lint)
+RUN npm run build -- --no-lint
+
+# 生产阶段
+FROM node:18-alpine AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV NEXT_PUBLIC_API_URL=http://localhost:1337  #修改这里
+```
+

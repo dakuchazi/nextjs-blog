@@ -18,7 +18,7 @@ COPY . .
 # 设置环境变量
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
-ENV NEXT_PUBLIC_API_URL=https://admin.xukucha.cn
+ENV NEXT_PUBLIC_API_URL=http://localhost:1337
 # 忽略 ESLint 错误
 ENV NEXT_LINT_DISABLED=1
 
@@ -31,7 +31,7 @@ FROM node:18-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV NEXT_PUBLIC_API_URL=https://admin.xukucha.cn
+ENV NEXT_PUBLIC_API_URL=http://localhost:1337
 
 # 复制必要文件
 COPY --from=builder /app/public ./public
